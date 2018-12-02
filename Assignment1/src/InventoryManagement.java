@@ -23,13 +23,13 @@ public class InventoryManagement {
         // loop till the user wants to add more items
         while (reader.next().charAt(0) == 'y') {
             System.out.print("Name: ");
-            String name = reader.next();
+            String name = reader.nextLine();
             System.out.print("Price: ");
-            double price = reader.nextDouble();
+            double price = Double.parseDouble(reader.nextLine());
             System.out.print("Quantity: ");
-            int quantity = reader.nextInt();
+            int quantity = Integer.parseInt(reader.nextLine());
             System.out.print("Type (raw, manufactured, or imported): ");
-            String type = reader.next();
+            String type = reader.nextLine();
             try {
                 itemList.add(new Item(name, price, quantity, type));
                 System.out.printf("Item %s added!\n", name);
