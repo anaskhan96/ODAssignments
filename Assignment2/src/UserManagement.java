@@ -38,17 +38,20 @@ public class UserManagement {
         System.out.print("5. Enter set of courses interested in separated by a comma (A, B, C, D, E, and F): ");
         String[] coursesEntered = reader.next().split(",");
         if (coursesEntered.length < 4) {
+            // number of courses enrolled in should be minimum 4
             System.out.printf("It is mandatory to be enrolled in at least 4 courses; you entered only %d. Try again.\n", coursesEntered.length);
             return;
         }
-        UserStore.Courses[] courses = new UserStore.Courses[coursesEntered.length];
+        UserStore.Courses[] courses = new UserStore.Courses[coursesEntered.length <= 6 ? coursesEntered.length : 6];
         for (int i = 0; i < coursesEntered.length; i++) {
             try {
                 courses[i] = UserStore.Courses.valueOf(coursesEntered[i]);
             } catch (IllegalArgumentException iae) {
+                // Course entered is not a valid one
                 System.out.println("Acceptable courses are A, B, C, D, E, and F. Try again.");
                 return;
             } catch (ArrayIndexOutOfBoundsException aie) {
+                // Length of courses entered exceeds the maximum limit
                 System.out.println("Max course limit is 6 (A, B, C, D, E, and F). Try again");
                 return;
             }
@@ -111,6 +114,7 @@ public class UserManagement {
         UserStore userStore = new UserStore();
         try {
             userStore.restoreFromDisk();
+            System.out.println("Contents successfully read from disk.");
         } catch (Exception e) {
             System.out.println("Error loading data from disk: " + e.getMessage());
         }

@@ -29,6 +29,7 @@ class UserStore implements Serializable {
 
     private List<User> users = new ArrayList<>();
 
+    /* Adds a user to the list, throws an exception if roll number is not unique */
     void addUser(String name, short age, String address, int rollNo, Courses[] courses) throws InstanceAlreadyExistsException {
         User newUser = new User(name, age, address, rollNo, courses);
         for (User user : this.users) {
@@ -48,6 +49,7 @@ class UserStore implements Serializable {
         });
     }
 
+    /* Deletes a user with the provided roll number, throws an exception if roll number doesn't exist */
     void deleteUser(int rollNo) throws InstanceNotFoundException {
         for (User user : this.users) {
             if (user.rollNo == rollNo) {
@@ -59,6 +61,7 @@ class UserStore implements Serializable {
         throw new InstanceNotFoundException("User with given roll no does not exist");
     }
 
+    /* Function to sort users list according based on user's different fields */
     private static void sortList(List<User> usersList, int sortOption) {
         switch (sortOption) {
             case 1:
@@ -98,9 +101,11 @@ class UserStore implements Serializable {
         }
     }
 
+    /* Display all users in a tabular format */
     void display(int sortOption) {
         List<User> usersList = new ArrayList<>(this.users);
         if (sortOption > 0) {
+            // user entered a specific field for sorting
             sortList(usersList, sortOption);
         }
         System.out.println(new String(new char[150]).replace("\0", "-"));
@@ -114,12 +119,14 @@ class UserStore implements Serializable {
         System.out.println(new String(new char[150]).replace("\0", "-"));
     }
 
+    /* Save in memory users list to a file on disk */
     void saveToDisk() throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Users.serialized"));
         oos.writeObject(this.users);
         oos.flush();
     }
 
+    /* Read file on disk and populate in memory users list */
     void restoreFromDisk() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Users.serialized"));
         this.users = (List<User>) ois.readObject();
