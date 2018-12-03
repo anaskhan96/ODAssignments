@@ -37,22 +37,18 @@ public class UserManagement {
         }
         System.out.print("5. Enter set of courses interested in separated by a comma (A, B, C, D, E, and F): ");
         String[] coursesEntered = reader.next().split(",");
-        if (coursesEntered.length < 4) {
-            // number of courses enrolled in should be minimum 4
-            System.out.printf("It is mandatory to be enrolled in at least 4 courses; you entered only %d. Try again.\n", coursesEntered.length);
+        if (coursesEntered.length < 4 || coursesEntered.length > 6) {
+            // number of courses enrolled in is invalid
+            System.out.printf("Courses enrolled can be a minimum of 4 and maximum of 6; you entered %d. Try again.\n", coursesEntered.length);
             return;
         }
-        UserStore.Courses[] courses = new UserStore.Courses[coursesEntered.length <= 6 ? coursesEntered.length : 6];
+        UserStore.Courses[] courses = new UserStore.Courses[coursesEntered.length];
         for (int i = 0; i < coursesEntered.length; i++) {
             try {
                 courses[i] = UserStore.Courses.valueOf(coursesEntered[i]);
             } catch (IllegalArgumentException iae) {
                 // Course entered is not a valid one
                 System.out.println("Acceptable courses are A, B, C, D, E, and F. Try again.");
-                return;
-            } catch (ArrayIndexOutOfBoundsException aie) {
-                // Length of courses entered exceeds the maximum limit
-                System.out.println("Max course limit is 6 (A, B, C, D, E, and F). Try again");
                 return;
             }
         }
