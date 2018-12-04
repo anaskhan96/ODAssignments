@@ -1,5 +1,6 @@
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -73,7 +74,7 @@ public class UserManagement {
 
     private static void deleteDetails(UserStore userStore) {
         Scanner reader = new Scanner(System.in);
-        System.out.print("Enter the roll no of the user: ");
+        System.out.print("Enter the roll no of the user to be deleted: ");
         int rollNo = reader.nextInt();
         try {
             userStore.deleteUser(rollNo);
@@ -101,19 +102,21 @@ public class UserManagement {
     }
 
     public static void main(String[] args) {
+        UserStore userStore = new UserStore();
+        try {
+            userStore.restoreFromDisk();
+            System.out.println("Contents successfully read from disk.");
+        } catch (FileNotFoundException fne) {
+            System.out.println("No file found to load data from.");
+        } catch (Exception e) {
+            System.out.println("Error loading data from disk: " + e.getMessage());
+        }
+
         System.out.println("1. Add User Details");
         System.out.println("2. Display User Details");
         System.out.println("3. Delete User Details");
         System.out.println("4. Save User Details");
         System.out.println("5. Exit");
-
-        UserStore userStore = new UserStore();
-        try {
-            userStore.restoreFromDisk();
-            System.out.println("Contents successfully read from disk.");
-        } catch (Exception e) {
-            System.out.println("Error loading data from disk: " + e.getMessage());
-        }
 
         Scanner reader = new Scanner(System.in);
         while (true) {

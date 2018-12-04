@@ -127,6 +127,7 @@ class UserStore implements Serializable {
     }
 
     /* Read file on disk and populate in memory users list */
+    @SuppressWarnings("unchecked")
     void restoreFromDisk() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Users.serialized"));
         this.users = (List<User>) ois.readObject();
