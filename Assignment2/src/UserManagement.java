@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class UserManagement {
 
+    /* Take details of new user, throw error messages on invalid input */
     private static void addDetails(UserStore userStore) {
         Scanner reader = new Scanner(System.in);
         System.out.print("1. Full Name: ");
@@ -62,6 +63,7 @@ public class UserManagement {
         }
     }
 
+    /* Display the details of all users, ask for an optional sort preference */
     private static void displayDetails(UserStore userStore) {
         Scanner reader = new Scanner(System.in);
         System.out.print("Do you want the display sorted in any particular order? (y/n): ");
@@ -72,6 +74,7 @@ public class UserManagement {
             userStore.display(0);
     }
 
+    /* Ask for the user's roll number and then proceed with deletion */
     private static void deleteDetails(UserStore userStore) {
         Scanner reader = new Scanner(System.in);
         System.out.print("Enter the roll no of the user to be deleted: ");
@@ -85,6 +88,7 @@ public class UserManagement {
         }
     }
 
+    /* Serialize and save the in memory user data, report if an error occurs */
     private static void saveDetails(UserStore userStore) {
         try {
             userStore.saveToDisk();
@@ -94,6 +98,7 @@ public class UserManagement {
         }
     }
 
+    /* Ask if the data in memory should be saved before exiting, and proceed accordingly */
     private static void onExitChanges(UserStore userStore) {
         Scanner reader = new Scanner(System.in);
         System.out.print("Do you want to save changes to disk before exiting? (y/n): ");
