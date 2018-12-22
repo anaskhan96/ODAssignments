@@ -36,19 +36,18 @@ class Item {
                 else if (finalPrice <= 200) salesTax += 10;
                 else salesTax += 0.05 * finalPrice;
         }
-        this.tax = salesTax;
         return salesTax;
     }
 
     /* Displays info about the item, along with the tax and final amount */
     void display() {
-        double salesTax = this.calculateTax();
+        this.tax = this.calculateTax();
         System.out.printf("Item name: %s\n", this.name);
         System.out.printf("Item price: %.2f\n", this.price);
         System.out.printf("Item quantity: %d\n", this.quantity);
         double finalPrice = this.price * this.quantity;
         System.out.printf("Final price: %.2f\n", finalPrice);
-        System.out.printf("Tax applied: %.2f\n", salesTax);
-        System.out.printf("Total amount: %.2f\n", (salesTax + finalPrice));
+        System.out.printf("Tax applied: %.2f\n", this.tax);
+        System.out.printf("Total amount: %.2f\n", (this.tax + finalPrice));
     }
 }
