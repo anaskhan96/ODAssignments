@@ -7,6 +7,7 @@ class Item {
     private double price;
     private int quantity;
     private ItemType type;
+    private double tax;
 
     Item(String name, double price, int quantity, String type) {
         this.name = name;
@@ -14,6 +15,7 @@ class Item {
         this.quantity = quantity;
         // will throw an exception if type is not raw, manufactured, or imported
         this.type = ItemType.valueOf(type);
+        this.tax = 0.0;
     }
 
     /* Calculates tax on the final price summed up by quantities of the item */
@@ -34,12 +36,13 @@ class Item {
                 else if (finalPrice <= 200) salesTax += 10;
                 else salesTax += 0.05 * finalPrice;
         }
+        this.tax = salesTax;
         return salesTax;
     }
 
     /* Displays info about the item, along with the tax and final amount */
     void display() {
-        double salesTax = calculateTax();
+        double salesTax = this.calculateTax();
         System.out.printf("Item name: %s\n", this.name);
         System.out.printf("Item price: %.2f\n", this.price);
         System.out.printf("Item quantity: %d\n", this.quantity);
