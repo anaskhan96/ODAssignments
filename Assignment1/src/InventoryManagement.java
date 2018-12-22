@@ -1,5 +1,7 @@
 import java.util.*;
 
+import inventory.Item;
+
 public class InventoryManagement {
 
     /* Parse given command line arguments and place them in the map for future reference */

@@ -1,4 +1,6 @@
-class Item {
+package inventory;
+
+public class Item {
     enum ItemType {
         raw, manufactured, imported
     }
@@ -9,7 +11,7 @@ class Item {
     private ItemType type;
     private double tax;
 
-    Item(String name, double price, int quantity, String type) {
+    public Item(String name, double price, int quantity, String type) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -19,7 +21,7 @@ class Item {
     }
 
     /* Calculates tax on the final price summed up by quantities of the item */
-    double calculateTax() {
+    public double calculateTax() {
         double salesTax;
         double totalPrice = this.price * this.quantity;
         switch (this.type) {
@@ -40,7 +42,7 @@ class Item {
     }
 
     /* Displays info about the item, along with the tax and final amount */
-    void display() {
+    public void display() {
         this.tax = this.calculateTax();
         System.out.printf("Item name: %s\n", this.name);
         System.out.printf("Item price: %.2f\n", this.price);
