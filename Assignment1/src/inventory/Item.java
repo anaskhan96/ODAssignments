@@ -20,6 +20,16 @@ public class Item {
         this.tax = 0.0;
     }
 
+    /* Getter method for name */
+    public String getName() {
+        return this.name;
+    }
+
+    /* Setter method for tax */
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
     /* Calculates tax on the final price summed up by quantities of the item */
     public double calculateTax() {
         double salesTax;
