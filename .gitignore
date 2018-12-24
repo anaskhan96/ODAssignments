@@ -2,3 +2,7 @@
 **/*.iml
 **/*.class
 **/out
+**/.gradle
+**/build/
+**/gradle/wrapper/gradle-wrapper.properties
+**/.gradletasknamecache
