@@ -17,6 +17,6 @@ public class HomeController {
     @GetMapping("")
     public User getUserDetails(@RequestAttribute("name") String name) {
         logger.info("GET /home");
-        return new User(-1, name, "test@email.com", "8998998998");
+        return new User();
     }
 }
