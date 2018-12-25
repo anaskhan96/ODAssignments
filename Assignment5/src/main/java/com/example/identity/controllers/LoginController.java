@@ -89,7 +89,7 @@ public class LoginController {
             return;
         }
 
-        sendOTP(user);
+        generateAndSend(user);
         userRepository.save(user);
         responseMap.put("message", "POST at /login/sendOTP with the phoneNumber and received OTP in the next two minutes");
         try {
@@ -102,7 +102,7 @@ public class LoginController {
         respWriter.write(responseJson);
     }
 
-    private void sendOTP(User user) throws IOException {
+    private void generateAndSend(User user) throws IOException {
         // generating the otp
         String digits = "0123456789";
         Random random = new Random();
