@@ -6,3 +6,4 @@
 **/build/
 **/gradle/wrapper/gradle-wrapper.properties
 **/.gradletasknamecache
+**/application-secrets.properties
