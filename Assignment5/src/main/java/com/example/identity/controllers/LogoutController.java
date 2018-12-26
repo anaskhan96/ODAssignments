@@ -1,5 +1,6 @@
 package com.example.identity.controllers;
 
+import com.example.identity.auth.Auth;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -22,7 +23,9 @@ public class LogoutController {
 
     @GetMapping("")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        //TODO - Invalidate token
+        String authToken = request.getHeader("Authorization");
+        if (authToken != null && authToken.split(" ").length == 2)
+            Auth.invalidateToken(authToken.split(" ")[1]);
         Map<String, String> logoutMap = new HashMap<>();
         logoutMap.put("success", "true");
         String logoutJson = "";
