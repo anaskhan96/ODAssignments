@@ -19,6 +19,14 @@ public class Graph {
             return this.id;
         }
 
+        String getName() {
+            return this.name;
+        }
+
+        Map<String, String> getDetails() {
+            return this.details;
+        }
+
         void displayDetails() {
             System.out.printf("Node ID: %d\n", this.id);
             System.out.printf("Node Name: %s\n", this.name);
@@ -43,6 +51,16 @@ public class Graph {
         }
     }
 
+    /* Getter method for list nodes */
+    List<Node> getNodes() {
+        return this.nodes;
+    }
+
+    /* Getter method for adjacency list */
+    List<LinkedList<Long>> getAdjList() {
+        return this.adjList;
+    }
+
     /* Add a node to the graph, without any implicit dependencies, and return its id */
     Long addNode(String name, Map<String, String> details) {
         // long id = new Date().getTime(); // ensures that the id is always unique
@@ -64,8 +82,9 @@ public class Graph {
             if (nodeList.getFirst() == id) {
                 this.adjList.remove(nodeList);
                 i--;
-            } else if (nodeList.contains(id))
-                nodeList.remove(id);
+            }
+            // removes if id is present
+            nodeList.remove(id);
         }
         // remove node data
         for (Node node : this.nodes) {
@@ -145,8 +164,7 @@ public class Graph {
         Queue<Long> queue = new LinkedList<>();
         // instantiate queue with all immediate parents
         Long[] nodeParents = this.getParents(id);
-        for (Long parentNodeId : nodeParents)
-            queue.add(parentNodeId);
+        Collections.addAll(queue, nodeParents);
         // loop over queue to find ancestors
         while (!queue.isEmpty()) {
             Long currNodeId = queue.remove();
@@ -169,8 +187,7 @@ public class Graph {
         Queue<Long> queue = new LinkedList<>();
         // instantiate queue with all immediate children
         Long[] nodeChildren = this.getChildren(id);
-        for (Long childNodeId : nodeChildren)
-            queue.add(childNodeId);
+        Collections.addAll(queue, nodeChildren);
         // loop over the queue to find descendents
         while (!queue.isEmpty()) {
             Long currNodeId = queue.remove();
