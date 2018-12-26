@@ -11,7 +11,7 @@ class UserStore implements Serializable {
         A, B, C, D, E, F
     }
 
-    private class User implements Serializable {
+    class User implements Serializable {
         private String name;
         private short age;
         private String address;
@@ -25,9 +25,34 @@ class UserStore implements Serializable {
             this.courses = courses;
             this.rollNo = rollNo;
         }
+
+        String getName() {
+            return this.name;
+        }
+
+        short getAge() {
+            return this.age;
+        }
+
+        String getAddress() {
+            return this.address;
+        }
+
+        int getRollNo() {
+            return this.rollNo;
+        }
+
+        Courses[] getCourses() {
+            return this.courses;
+        }
     }
 
     private List<User> users = new ArrayList<>();
+
+    /* Getter method for users */
+    List<User> getUsers() {
+        return this.users;
+    }
 
     /* Adds a user to the list, throws an exception if roll number is not unique */
     void addUser(String name, short age, String address, int rollNo, Courses[] courses) throws InstanceAlreadyExistsException {
