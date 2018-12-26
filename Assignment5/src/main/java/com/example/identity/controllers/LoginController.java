@@ -90,8 +90,12 @@ public class LoginController {
             return;
         }
 
-        generateAndSend(user);
-        userRepository.save(user);
+        boolean isExistingUser = false;
+        if (userRepository.findUserByPhoneNumber(user.getPhoneNumber()) == null) {
+            isExistingUser = true;
+            userRepository.save(user);
+        }
+        generateAndSend(user, isExistingUser);
         responseMap.put("message", "POST at /login/sendOTP with the phoneNumber and received OTP in the next two minutes");
         try {
             responseJson = new ObjectMapper().writeValueAsString(responseMap);
@@ -103,7 +107,7 @@ public class LoginController {
         respWriter.write(responseJson);
     }
 
-    private void generateAndSend(User user) throws IOException {
+    private void generateAndSend(User user, boolean isExistingUser) throws IOException {
         // generating the otp
         String digits = "0123456789";
         Random random = new Random();
@@ -124,7 +128,8 @@ public class LoginController {
             @Override
             public void run() {
                 otpTempStore.remove(user.getPhoneNumber());
-                userRepository.delete(user);
+                if (!isExistingUser)
+                    userRepository.delete(user);
             }
         };
         this.timer.schedule(deleteOtp, 120000);
