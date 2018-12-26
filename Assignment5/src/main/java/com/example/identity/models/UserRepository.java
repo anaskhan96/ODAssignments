@@ -2,6 +2,8 @@ package com.example.identity.models;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+import java.util.List;
 
+public interface UserRepository extends CrudRepository<User, Integer> {
+    User findUserByPhoneNumber(String number);
 }

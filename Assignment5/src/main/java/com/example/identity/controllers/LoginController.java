@@ -1,5 +1,6 @@
 package com.example.identity.controllers;
 
+import com.example.identity.auth.Auth;
 import com.example.identity.models.User;
 import com.example.identity.models.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,9 +44,9 @@ public class LoginController {
         if (otpTempStore.get(number) == otpHash) {
             this.timer.cancel();
             otpTempStore.remove(number);
-            //TODO - generate token
+            String token = Auth.createToken(number);
             responseMap.put("success", "true");
-            responseMap.put("token", "JWT12345");
+            responseMap.put("token", token);
             try {
                 responseJson = new ObjectMapper().writeValueAsString(responseMap);
             } catch (JsonProcessingException jpe) {

@@ -1,5 +1,6 @@
 package com.example.identity.middleware;
 
+import com.example.identity.auth.Auth;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -24,8 +25,9 @@ public class HomeInterceptor extends HandlerInterceptorAdapter {
         } catch (Exception e) {
             authToken = null;
         }
+        String authNumber = getAuthUser(authToken);
         // check if no authorization header is provided or auth token is incorrect
-        if (authToken == null || !checkAuthorizationToken(request, authToken)) {
+        if (authNumber.isEmpty()) {
             Map<String, String> errorMap = new HashMap<>();
             errorMap.put("error", "Authorization failed");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -44,12 +46,12 @@ public class HomeInterceptor extends HandlerInterceptorAdapter {
             }
             return false;
         }
-        request.setAttribute("name", authToken);
+        request.setAttribute("number", authNumber);
         return true;
     }
 
-    private static boolean checkAuthorizationToken(HttpServletRequest request, String token) {
-        //TODO - Check token for authentication
-        return true;
+    private static String getAuthUser(String token) {
+        if (token == null || (token.split(" ").length < 2)) return ""; // token.split(" ")[0] is the word "Bearer"
+        return Auth.verifyToken(token.split(" ")[1]);
     }
 }
